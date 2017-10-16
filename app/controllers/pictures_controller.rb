@@ -1,7 +1,16 @@
 class PicturesController < ApplicationController
 
   def index
-    @pictures = Picture.all
+    # @pictures = Picture.all
+    @pictures = Picture.most_recent_five
+
+    one_month = 1.month.ago
+    @month_old = Picture.created_before(one_month)
+
+    @pics_2016 = Picture.created_in_year(2016)
+    @pics_2015 = Picture.created_in_year(2015)
+    @pics_2014 = Picture.created_in_year(2014)
+
   end
 
   def show
@@ -13,7 +22,8 @@ class PicturesController < ApplicationController
   end
 
   def create
-    # render text: "Received POST request to '/pictures' with the data URL: #{params}"
+    # byebug
+    # render text: "Received POST request to \"/pictures\" with the data URL: #{params}"
 
     @picture = Picture.new
 
@@ -23,7 +33,7 @@ class PicturesController < ApplicationController
 
     if @picture.save
       #if the  pictures gets save, generate a fet request to "/pictures" (the index)
-      redirect_to '/pictures'
+      redirect_to "/pictures"
     else
       #otherwise render new.html.erb
       render :new
@@ -42,7 +52,7 @@ class PicturesController < ApplicationController
     @picture.url = params[:picture][:url]
 
     if @picture.save
-      redirect_to '/pictures/#{@picture.id}'
+      redirect_to "/pictures/#{@picture.id}"
     else
       render :edit
     end
@@ -52,7 +62,7 @@ class PicturesController < ApplicationController
   def destroy
     @picture = Picture.find(params[:id])
     @picture.destroy
-    redirect_to '/pictures'
+    redirect_to "/pictures"
   end
 
 end

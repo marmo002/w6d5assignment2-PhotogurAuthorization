@@ -1,11 +1,37 @@
 
 
-<h1>Pictures</h1>
+<h1>Most Recent Pictures</h1>
 
 <%= link_to("New Picture", "/pictures/new") %>
 
 <% @pictures.each do |picture| %>
-<p><%= picture.title  %>, <%= picture.artist %></p>
+  <p><%= picture.title  %>, by "<%= picture.artist %>"</p>
 <%= link_to(image_tag(picture.url), "/pictures/#{picture.id}") %>
 <!-- <img src="<%= picture.url %>" alt="<%= picture.title %>" > -->
+<% end %>
+
+<h2>There are "<%= @month_old.length %>"  one month old pictures</h2>
+
+<% @month_old.each do |m| %>
+  <p><%= link_to m.title, picture_path(m.id) %></p>
+<% end %>
+
+<% 3.times do |t| %>
+  <div>
+    <%
+      t += 1
+      past_year = Date.current.year - t
+      pics = Picture.created_in_year(past_year)
+    %>
+    <h2>Pictures from the year <%= past_year%></h2>
+    <ul>
+      <% if pics.empty? %>
+        <li>No Pictures for this year</li>
+      <% else %>
+        <% pics.each do |pic| %>
+          <li><%= link_to pic.title, picture_path(pic.id) %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
