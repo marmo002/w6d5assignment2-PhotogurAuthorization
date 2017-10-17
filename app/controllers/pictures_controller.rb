@@ -7,10 +7,6 @@ class PicturesController < ApplicationController
     one_month = 1.month.ago
     @month_old = Picture.created_before(one_month)
 
-    @pics_2016 = Picture.created_in_year(2016)
-    @pics_2015 = Picture.created_in_year(2015)
-    @pics_2014 = Picture.created_in_year(2014)
-
   end
 
   def show
