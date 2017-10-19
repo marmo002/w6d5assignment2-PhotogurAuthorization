@@ -15,4 +15,6 @@ Rails.application.routes.draw do
 
   delete 'pictures/:id' => 'pictures#destroy'
 
+  resource :users, only: [ :new, :create ]
+
 end
