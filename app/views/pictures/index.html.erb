@@ -1,8 +1,13 @@
 
-
 <h1>Most Recent Pictures</h1>
 
-<%= link_to("New Picture", "/pictures/new") %>
+<% if current_user %>
+  <%= link_to("New Picture", "/pictures/new") %>
+<% else %>
+  <p>Log in or Sign up to add your own pictures</p>
+<% end %>
+
+
 
 <% @pictures.each do |picture| %>
   <p><%= picture.title  %>, by "<%= picture.artist %>"</p>

@@ -2,6 +2,7 @@ class PicturesController < ApplicationController
 
   def index
     # @pictures = Picture.all
+    @user = User.all
     @pictures = Picture.most_recent_five
 
     one_month = 1.month.ago
