@@ -12,6 +12,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def load_picture
+    @picture = Picture.find(params[:id])
+  end
+
+  def ensure_user_owns_picture
+    picture_owner = @picture.user
+    unless @picture.user_id == current_user.id
+      flash[:notice] = "You are not #{picture_owner.email}"
+      redirect_to new_sessions_url
+    end
+  end
   private
 
   def current_user
