@@ -1,4 +1,6 @@
 class Picture < ApplicationRecord
+  belongs_to :user
+
 
   validates :artist, :url,  presence: true
   validates :title, length: { in: 3..20 }
